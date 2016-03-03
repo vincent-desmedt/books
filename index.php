@@ -13,18 +13,14 @@ try {
     $cn->query('SET NAMES UTF8');
 } catch(PDOException $e) {
     // quand on a un objet pour accèder aux méthodes on utilise ->
-    echo $e->getMessage();
+    die($e->getMessage());
 }
 
-include('book.php');
 
-if(isset($_GET['id'])){
-    $id = intval($_GET['id']);
-    $book = getBook($id);
-    $view = 'singlebook.php';
-}else{
-    $books = getBooks();
-    $view = 'allbooks.php';
-}
+$a = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'index';
+$e = isset($_REQUEST['e']) ? $_REQUEST['e'] : 'books';
+include('controllers/'.$e.'controller.php');
 
-include('view.php');
+$datas = call_user_func($a);
+
+include('views/view.php');

@@ -16,9 +16,13 @@ try {
     die($e->getMessage());
 }
 
+include('routes.php');
 
 $a = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'index';
 $e = isset($_REQUEST['e']) ? $_REQUEST['e'] : 'books';
+if(!in_array($a.'_'.$e, $routes)){
+    die('cette route n\'est pas permise !');
+}
 include('controllers/'.$e.'controller.php');
 
 $datas = call_user_func($a);
